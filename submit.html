@@ -110,9 +110,17 @@
             <button type="submit" id="submitButton">Submit</button>
         </form>
 
-        <table class="table table-striped">
-                <tbody id="gemList"></tbody>
-            </table>
+      <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Category</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody id="gemList"></tbody>
+</table>
         </div>
     </section>
 
@@ -128,10 +136,10 @@
         }
         
         // Proceed with form submission
-        const name = document.getElementById("gemName").value;
-        const category = document.getElementById("gemCategory").value;
-        const address = document.getElementById("gemAddress").value;
-        const description = document.getElementById("gemDescription").value;
+        const name = document.getElementById("gemName");
+        const category = document.getElementById("gemCategory");
+        const address = document.getElementById("gemAddress");
+        const description = document.getElementById("gemDescription");
 
          [name, category, address, description].forEach(field => {
             field.style.border = "1px solid #ccc";
@@ -169,21 +177,22 @@
         }
     });
       async function submitGemToFirebase(name, category, address, description) {
-        try {
-            await addDoc(collection(db, "LocalGems"), {
-                gem_name: name,
-                gem_address: address,
-                gem_category: category,
-                gem_description: description,
-                timestamp: new Date()
-            });
-            alert("Hidden gem submitted successfully!");
-            document.getElementById("gemForm").reset();
-            grecaptcha.reset();
-        } catch (error) {
-            alert("Error submitting: " + error.message);
-        }
-    });
+    try {
+        const db = getFirestore(); // Ensure db is available
+        await addDoc(collection(db, "LocalGems"), {
+            gem_name: name,
+            gem_address: address,
+            gem_category: category,
+            gem_description: description,
+            timestamp: new Date()
+        });
+        alert("Hidden gem submitted successfully!");
+        document.getElementById("gemForm").reset();
+        grecaptcha.reset();
+    } catch (error) {
+        alert("Error submitting: " + error.message);
+    }
+}
     </script>
 
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
