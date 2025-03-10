@@ -1,0 +1,24 @@
+# a path:
+/index2.html
+  # headers for that path:
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer-when-downgrade
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+# another path:
+/categories.html
+  # headers for that path:
+  Strict-Transport-Security: SAMEORIGIN
+  X-Content-Type-Options: SAMEORIGIN
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: SAMEORIGIN
+  Permissions-Policy: SAMEORIGIN
+# another path:
+/submit.html
+  # headers for that path:
+  Strict-Transport-Security: SAMEORIGIN
+  X-Content-Type-Options: SAMEORIGIN
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: SAMEORIGIN
+  Permissions-Policy: SAMEORIGIN
