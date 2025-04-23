@@ -159,11 +159,11 @@
 
             const savedMarkers = JSON.parse(localStorage.getItem("markers")) || [];
             savedMarkers.forEach(function (pos) {
-                addMarker(new google.maps.LatLng(pos.lat, pos.lng));
+                addMarker(new google.maps.LatLng(pos.lat, pos.lng), false);
         });
 
             map.addListener("click", function (event) {
-                addMarker(event.latLng);
+                addMarker(event.latLng, true);
             });
         }
         
