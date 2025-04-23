@@ -157,21 +157,51 @@
                 center: defaultLocation
             });
 
+            const savedMarkers = JSON.parse(localStorage.getItem("markers")) || [];
+            savedMarkers.forEach(function (pos) {
+                addMarker(new google.maps.LatLng(pos.lat, pos.lng));
+        });
+
             map.addListener("click", function (event) {
                 addMarker(event.latLng);
             });
         }
         
-            function addMarker(location) {
+            function addMarker(location, shouldSave) {
             var marker = new google.maps.Marker({
                 position: location,
                 map: map
             });
+
+            marker.addListener("click", function () {
+                marker.setMap(null); 
+                removeMarker(marker); 
+            });
             
              markers.push(marker);
+
+             if (shouldSave) {
+                 saveMarker(location);
+             }
         }
 
-        </script>
+        function saveMarker(location) {
+            const savedMarkers = JSON.parse(localStorage.getItem("markers")) || [];
+            savedMarkers.push({ lat: location.lat(), lng: location.lng() });
+            localStorage.setItem("markers", JSON.stringify(savedMarkers));
+        }
+
+        function removeMarker(markerToRemove) {
+            markers = markers.filter(marker => marker !== markerToRemove);
+
+            const updated = markers.map(marker => ({
+                lat: marker.getPosition().lat(),
+                lng: marker.getPosition().lng()
+            }));
+
+            localStorage.setItem("markers", JSON.stringify(updated));
+        }    
+    </script>
 
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCn9Xvet7HJhzhwLNmYwfOFZ4l2HJdC7Ec&callback=initMap"></script>
 
